@@ -1,3 +1,7 @@
+/**
+ * 最重要的一个文件了
+ * metamask的管理中枢
+ */
 const EventEmitter = require('events')//事件处理
 const extend = require('xtend')//用来进行属性扩展的
 const pump = require('pump')//pump is a small node module that pipes streams together and destroys all of them if one of them closes.
@@ -10,30 +14,30 @@ const RpcEngine = require('json-rpc-engine')//进行json rpc调用的json-rpc-en
 const debounce = require('debounce')//防抖
 const createEngineStream = require('json-rpc-middleware-stream/engineStream')//没有文档
 const createFilterMiddleware = require('eth-json-rpc-filters')//又是一个类似于web3的文件
-const createOriginMiddleware = require('./lib/createOriginMiddleware')
+const createOriginMiddleware = require('./lib/createOriginMiddleware')//不明白下面三个类是干嘛的
 const createLoggerMiddleware = require('./lib/createLoggerMiddleware')
 const createProviderMiddleware = require('./lib/createProviderMiddleware')
-const setupMultiplex = require('./lib/stream-utils.js').setupMultiplex
-const KeyringController = require('eth-keyring-controller')
-const NetworkController = require('./controllers/network')
-const PreferencesController = require('./controllers/preferences')
-const CurrencyController = require('./controllers/currency')
-const NoticeController = require('./notice-controller')
-const ShapeShiftController = require('./controllers/shapeshift')
-const AddressBookController = require('./controllers/address-book')
-const InfuraController = require('./controllers/infura')
-const BlacklistController = require('./controllers/blacklist')
-const MessageManager = require('./lib/message-manager')
-const PersonalMessageManager = require('./lib/personal-message-manager')
-const TypedMessageManager = require('./lib/typed-message-manager')
-const TransactionController = require('./controllers/transactions')
-const BalancesController = require('./controllers/computed-balances')
-const ConfigManager = require('./lib/config-manager')
-const nodeify = require('./lib/nodeify')
-const accountImporter = require('./account-import-strategies')
-const getBuyEthUrl = require('./lib/buy-eth-url')
-const Mutex = require('await-semaphore').Mutex
-const version = require('../manifest.json').version
+const setupMultiplex = require('./lib/stream-utils.js').setupMultiplex//stream相关
+const KeyringController = require('eth-keyring-controller')//一个非常重要的模块!!!用于进行账户管理的
+const NetworkController = require('./controllers/network')//网络连接
+const PreferencesController = require('./controllers/preferences')//偏好信息
+const CurrencyController = require('./controllers/currency')//现金流
+const NoticeController = require('./notice-controller')//事件处理
+const ShapeShiftController = require('./controllers/shapeshift')//上行通讯？
+const AddressBookController = require('./controllers/address-book')//通讯录
+const InfuraController = require('./controllers/infura')//提供以太坊的网关服务
+const BlacklistController = require('./controllers/blacklist')//黑名单
+const MessageManager = require('./lib/message-manager')//消息管理
+const PersonalMessageManager = require('./lib/personal-message-manager')//私有消息管理
+const TypedMessageManager = require('./lib/typed-message-manager')//类型消息管理，不理解三者的区别
+const TransactionController = require('./controllers/transactions')//交易
+const BalancesController = require('./controllers/computed-balances')//计算余额
+const ConfigManager = require('./lib/config-manager')//配置管理
+const nodeify = require('./lib/nodeify')//不知道是干嘛的
+const accountImporter = require('./account-import-strategies')//导入已有账户
+const getBuyEthUrl = require('./lib/buy-eth-url')//常用网址
+const Mutex = require('await-semaphore').Mutex//信号量的JS实现
+const version = require('../manifest.json').version//版本文档
 
 module.exports = class MetamaskController extends EventEmitter {
 
@@ -51,10 +55,10 @@ module.exports = class MetamaskController extends EventEmitter {
     this.platform = opts.platform
 
     // observable state store
-    this.store = new ObservableStore(initState)
+    this.store = new ObservableStore(initState)//观察者模式的store
 
     // lock to ensure only one vault created at once
-    this.createVaultMutex = new Mutex()
+    this.createVaultMutex = new Mutex()//模拟了多线程的互斥变量,本质上是异步
 
     // network store
     this.networkController = new NetworkController(initState.NetworkController)

@@ -3,7 +3,7 @@ const async = require('async')
 const Dnode = require('dnode')
 const EthQuery = require('eth-query')
 const launchMetamaskUi = require('../../ui')
-const StreamProvider = require('web3-stream-provider')
+const StreamProvider = require('web3-stream-provider')//Utility for creating an Ethereum web3 provider that forwards payloads through a stream. Only works for async payloads.
 const setupMultiplex = require('./lib/stream-utils.js').setupMultiplex
 
 
@@ -21,12 +21,13 @@ function initializePopup ({ container, connectionStream }, cb) {
 function connectToAccountManager (connectionStream, cb) {
   // setup communication with background
   // setup multiplexing
-  var mx = setupMultiplex(connectionStream)
+  var mx = setupMultiplex(connectionStream)//stream的多路复用
   // connect features
-  setupControllerConnection(mx.createStream('controller'), cb)
-  setupWeb3Connection(mx.createStream('provider'))
+  setupControllerConnection(mx.createStream('controller'), cb)//添加子stream
+  setupWeb3Connection(mx.createStream('provider'))//添加子stream
 }
 
+//web3l流通讯
 function setupWeb3Connection (connectionStream) {
   var providerStream = new StreamProvider()
   providerStream.pipe(connectionStream).pipe(providerStream)

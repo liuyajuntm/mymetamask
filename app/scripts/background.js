@@ -41,7 +41,7 @@ async function initialize () {
 //
 // State and Persistence
 //
-
+//从localstorage里面取一些基本信息
 async function loadStateFromPersistence () {
   // migrations
   const migrator = new Migrator({ migrations })

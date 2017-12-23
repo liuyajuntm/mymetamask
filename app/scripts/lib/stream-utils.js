@@ -23,7 +23,11 @@ function jsonStringifyStream () {
 }
 
 function setupMultiplex (connectionStream) {
-  const mux = new ObjectMultiplex()
+  const mux = new ObjectMultiplex()//stream的多路复用
+  /**
+   * When using standard source.pipe(dest) source will not be destroyed if dest emits close or an error. You are also not able to provide a callback to tell when then pipe has finished.
+   * pump does these two things for you
+   */
   pump(
     connectionStream,
     mux,
