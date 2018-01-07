@@ -14,6 +14,7 @@ function initializePopup ({ container, connectionStream }, cb) {
   // setup app
   async.waterfall([
     (cb) => connectToAccountManager(connectionStream, cb),
+    //本质上返回了一个RPC调用的S端的所有可调用接口，popup本身是一个C端，content是S端？
     (accountManager, cb) => launchMetamaskUi({ container, accountManager }, cb),
   ], cb)
 }
@@ -45,6 +46,10 @@ function setupControllerConnection (connectionStream, cb) {
       eventEmitter.emit('update', state)
     },
   })
+  //https://github.com/substack/dnode
+  //这就是dnode的一个标准写法，具体为啥要这么写，我也不明白
+  //本质意义就是accountManagerDnode是一个RPC调用的C端，里面的所有操作都实际发生在S端
+  //connectionStream是这个RPC的链接
   connectionStream.pipe(accountManagerDnode).pipe(connectionStream)
   accountManagerDnode.once('remote', function (accountManager) {
     // setup push events

@@ -21,6 +21,7 @@ global.METAMASK_UI_TYPE = windowType
 closePopupIfOpen(windowType)
 
 // setup stream to background
+//建立和background.js的通讯机制，没太明白，他们本身就是可以通信的啊。。。
 const extensionPort = extension.runtime.connect({ name: windowType })
 const connectionStream = new PortStream(extensionPort)
 
