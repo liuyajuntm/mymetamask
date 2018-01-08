@@ -27,6 +27,8 @@ const extensionPort = extension.runtime.connect({ name: windowType })
 const connectionStream = new PortStream(extensionPort)
 
 // start ui
+//完成了UI的初始化工作
+//UI并不是及时显示，而是被callback触发的
 const container = document.getElementById('app-content')
 startPopup({ container, connectionStream }, (err, store) => {
   if (err) return displayCriticalError(err)

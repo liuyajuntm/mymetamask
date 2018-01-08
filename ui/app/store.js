@@ -14,7 +14,7 @@ const loggerMiddleware = createLogger({
 
 const middlewares = [thunkMiddleware, loggerMiddleware]
 
-const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore)
+const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore)//applyMiddleware方法主要是对redux的dispacth方法进行封装,本质只是柯里化
 
 function configureStore (initialState) {
   return createStoreWithMiddleware(rootReducer, initialState)

@@ -12,6 +12,8 @@ module.exports = initializePopup
 
 function initializePopup ({ container, connectionStream }, cb) {
   // setup app
+  //让异步函数顺序执行
+  //waterfall每个函数产生的值，都将传给下一个函数
   async.waterfall([
     (cb) => connectToAccountManager(connectionStream, cb),
     (accountManager, cb) => launchMetamaskUi({ container, accountManager }, cb),
@@ -36,7 +38,7 @@ function setupWeb3Connection (connectionStream) {
   global.ethereumProvider = providerStream
   global.ethQuery = new EthQuery(providerStream)
 }
-
+//程序启动的时候会立即调用都这里
 function setupControllerConnection (connectionStream, cb) {
   // this is a really sneaky way of adding EventEmitter api
   // to a bi-directional dnode instance

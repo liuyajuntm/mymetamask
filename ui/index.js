@@ -12,6 +12,7 @@ module.exports = launchMetamaskUi
 log.setLevel(global.METAMASK_DEBUG ? 'debug' : 'warn')
 
 function launchMetamaskUi (opts, cb) {
+  debugger
   var accountManager = opts.accountManager
   actions._setBackgroundConnection(accountManager)
   // check if we are unlocked first

@@ -434,6 +434,7 @@ App.prototype.renderBackButton = function (style, justArrow = false) {
   )
 }
 
+//点击popup时立即显示的页面
 App.prototype.renderPrimary = function () {
   log.debug('rendering primary')
   var props = this.props
