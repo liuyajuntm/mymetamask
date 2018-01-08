@@ -256,7 +256,7 @@ function createNewVaultAndRestore (password, seed) {
     })
   }
 }
-
+//触发了多个异步action
 function createNewVaultAndKeychain (password) {
   return (dispatch) => {
     dispatch(actions.showLoadingIndication())

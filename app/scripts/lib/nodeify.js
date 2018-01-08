@@ -1,6 +1,6 @@
 const promiseToCallback = require('promise-to-callback')
 const noop = function () {}
-
+//只是把promise换成了标准的cb，兼容各种浏览器
 module.exports = function nodeify (fn, context) {
   return function () {
     const args = [].slice.call(arguments)

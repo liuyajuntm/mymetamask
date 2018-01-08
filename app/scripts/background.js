@@ -88,7 +88,7 @@ function setupController (initState) {
   //
   // connect to other contexts
   //
-
+  //background是被动和popup通讯的，实在popup或者notification主动申请之后，bg才会通过dnode和其建立链接
   extension.runtime.onConnect.addListener(connectRemote)
   function connectRemote (remotePort) {
     const isMetaMaskInternalProcess = remotePort.name === 'popup' || remotePort.name === 'notification'
@@ -96,7 +96,7 @@ function setupController (initState) {
     if (isMetaMaskInternalProcess) {
       // communication with popup
       popupIsOpen = popupIsOpen || (remotePort.name === 'popup')
-      controller.setupTrustedCommunication(portStream, 'MetaMask')
+      controller.setupTrustedCommunication(portStream, 'MetaMask')//直接返回了所有可供调用的api
       // record popup as closed
       if (remotePort.name === 'popup') {
         endOfStream(portStream, () => {
